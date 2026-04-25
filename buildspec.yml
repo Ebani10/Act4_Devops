@@ -9,3 +9,6 @@ phases:
       - echo "Empaquetando y actualizando Lambda..."
       - zip function.zip process_data.py
       - aws lambda update-function-code --function-name procesador_estados_temperatura --zip-file fileb://function.zip
+  artifacts:
+    files:
+      - '**/*'     
