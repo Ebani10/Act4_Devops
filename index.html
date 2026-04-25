@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Temperaturas</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; background: #f0f2f5; }
+        .container { display: flex; gap: 20px; margin-top: 50px; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 250px; text-align: center; }
+        .calor { border-top: 8px solid #ff4d4d; }
+        .frio { border-top: 8px solid #3d85c6; }
+        h2 { color: #333; }
+        .temp { font-size: 2.5em; font-weight: bold; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Resumen de Clima en México</h1>
+    
+    <div class="container">
+        <div class="card calor">
+            <h3>☀️ Más Caluroso</h3>
+            <h2 id="estado-max">...</h2>
+            <div class="temp" id="temp-max">--°C</div>
+            <p>Humedad: <span id="hum-max">--</span>%</p>
+        </div>
+
+        <div class="card frio">
+            <h3>❄️ Más Frío</h3>
+            <h2 id="estado-min">...</h2>
+            <div class="temp" id="temp-min">--°C</div>
+            <p>Humedad: <span id="hum-min">--</span>%</p>
+        </div>
+    </div>
+
+    <script>
+        fetch('datos_filtrados.json')
+            .then(res => res.json())
+            .then(data => {
+                // Llenar datos de calor
+                document.getElementById('estado-max').innerText = data.caluroso.estado;
+                document.getElementById('temp-max').innerText = data.caluroso.temperatura + "°C";
+                document.getElementById('hum-max').innerText = data.caluroso.humedad;
+
+                // Llenar datos de frío
+                document.getElementById('estado-min').innerText = data.frio.estado;
+                document.getElementById('temp-min').innerText = data.frio.temperatura + "°C";
+                document.getElementById('hum-min').innerText = data.frio.humedad;
+            })
+            .catch(err => console.error("Error cargando el JSON:", err));
+    </script>
+</body>
+</html>

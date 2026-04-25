@@ -1,0 +1,11 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - echo "Sincronizando HTML con S3..."
+      - aws s3 cp index.html s3://ebani-act-devops/
+  post_build:
+    commands:
+      - echo "Empaquetando y actualizando Lambda..."
+      - zip function.zip process_data.py
+      - aws lambda update-function-code --function-name procesador_estados_temperatura --zip-file fileb://function.zip
